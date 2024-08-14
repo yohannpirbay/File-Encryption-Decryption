@@ -4,7 +4,7 @@ import time
 
 # Generates a key for encryption
 def generate_key():
-    return(Fernet.generate_key())
+    return(Fernet.generate_key().decode('utf-8'))
 
 # Encrypts a given file with the user's gien key
 def encrypt_file(input_file, key):
