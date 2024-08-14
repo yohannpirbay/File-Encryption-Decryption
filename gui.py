@@ -48,16 +48,19 @@ class MyGUI:
 
         self.root.mainloop()
     
+    # Generates a key, copies it to the clipboard and displays it hidden for the user
     def on_generate(self):
         key = generate_key()
         copy(key)
         self.key_display.insert(0, key)
 
+    # Truncates the file path to fit the window
     def truncate_file_path(self, file_path):
         if len(file_path) > 40:
             return  file_path[0:10] + "..." + file_path[-(40 - 3):]
         return file_path
     
+    # Checks if the key is valid
     def validate_key(self):
         try:
             fernet = Fernet(self.key_display.get())
@@ -65,6 +68,7 @@ class MyGUI:
         except (ValueError, TypeError):
             return False
     
+    # Opens a dialogue box for file selection
     def select_file(self):
         file_path = filedialog.askopenfilename(title="Select a file", defaultextension=".txt", filetypes=[("Text Files", "*.txt")])
         if not file_path:
@@ -76,6 +80,7 @@ class MyGUI:
         else:
             messagebox.showerror("Invalid", "Please select a .txt file!")
 
+    # Encrypts a file
     def on_encrypt(self):
         if self.file == "":
             messagebox.showerror("Invalid", "Please select a file!")
@@ -86,6 +91,7 @@ class MyGUI:
         else:
             encrypt_file(self.file, self.key_display.get())
 
+    # Decrypts a file
     def on_decrypt(self):
         if self.file == "":
             messagebox.showerror("Invalid", "Please select a file!")
@@ -96,5 +102,6 @@ class MyGUI:
         else:
             decrypt_file(self.file, self.key_display.get())
 
+# Starts the application
 def run():
     MyGUI()
