@@ -65,7 +65,7 @@ class MyGUI:
         try:
             fernet = Fernet(self.key_display.get())
             return True
-        except (ValueError, TypeError):
+        except (ValueError, TypeError, InvalidToken):
             return False
     
     # Opens a dialogue box for file selection
@@ -78,7 +78,7 @@ class MyGUI:
             truncated_path = self.truncate_file_path(file_path)
             self.file_label.config(text=truncated_path)
         else:
-            messagebox.showerror("Invalid", "Please select a .txt file!")
+            messagebox.showerror("Invalid", "Invalid selection, please select a .txt file!")
 
     # Encrypts a file
     def on_encrypt(self):
@@ -100,7 +100,10 @@ class MyGUI:
         elif not self.validate_key():
             messagebox.showerror("Invalid", "The key is not valid!")
         else:
-            decrypt_file(self.file, self.key_display.get())
+            try:
+                decrypt_file(self.file, self.key_display.get())
+            except InvalidToken as error:
+                messagebox.showerror("Decryption Error", str(error))
 
 # Starts the application
 def run():
