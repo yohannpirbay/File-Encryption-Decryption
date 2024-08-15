@@ -1,9 +1,9 @@
 import tkinter as tk
 from tkinter import messagebox
-from encryption import *
+from encryption import encrypt_file, decrypt_file, generate_key
 from pyperclip import copy
 from tkinter import filedialog
-from cryptography.fernet import InvalidToken
+from cryptography.fernet import Fernet, InvalidToken
 
 # Class that handles the GUI for the application
 class MyGUI:
@@ -52,7 +52,9 @@ class MyGUI:
     def on_generate(self):
         key = generate_key()
         copy(key)
+        self.key_display.delete(0, tk.END)
         self.key_display.insert(0, key)
+        messagebox.showinfo("Info", "Key copied to your clipboard.")
 
     # Truncates the file path to fit the window
     def truncate_file_path(self, file_path):
@@ -65,7 +67,7 @@ class MyGUI:
         try:
             fernet = Fernet(self.key_display.get())
             return True
-        except (ValueError, TypeError, InvalidToken):
+        except (ValueError, TypeError):
             return False
     
     # Opens a dialogue box for file selection
@@ -90,6 +92,7 @@ class MyGUI:
             messagebox.showerror("Invalid", "The key is not valid!")
         else:
             encrypt_file(self.file, self.key_display.get())
+            messagebox.showinfo("Success", "File encrypted successfully!")
 
     # Decrypts a file
     def on_decrypt(self):
@@ -102,6 +105,7 @@ class MyGUI:
         else:
             try:
                 decrypt_file(self.file, self.key_display.get())
+                messagebox.showinfo("Success", "File decrypted successfully!")
             except InvalidToken as error:
                 messagebox.showerror("Decryption Error", str(error))
 

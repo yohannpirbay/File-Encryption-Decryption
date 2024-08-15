@@ -1,6 +1,4 @@
 from cryptography.fernet import Fernet, InvalidToken
-import os
-import time
 
 # Generates a key for encryption
 def generate_key():
@@ -27,9 +25,11 @@ def decrypt_file(input_file, key):
         with open(input_file, 'wb') as file:
             plain_text = fernet.decrypt(cipher_text)
             file.write(plain_text)
-    except:
+    except InvalidToken:
         with open(input_file, 'wb') as file:
             file.write(cipher_text)
         raise InvalidToken("Invalid decryption key or file already decrypted.")
+    except Exception as error:
+        raise error
 
 
