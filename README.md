@@ -1,4 +1,4 @@
-# File-Encryption/Decryption
+# File Encryption and Decryption
 
 This is a simple file encryption and decryption application developed in Python using the `cryptography` library for cryptographic operations and `Tkinter` for the GUI. The application allows users to securely encrypt and decrypt text files.
 
@@ -27,11 +27,11 @@ NB: Only .txt files are supported for encryption/decryption and the app is only 
 
 Clone the repository: 
  ```
-$ git clone https://github.com/yohannpirbay/password_generator.git
+$ git clone https://github.com/yohannpirbay/File-Encryption-Decryption.git
 ```
 Navigate to the correct file: 
 ```
-cd password_generator
+cd File-Encryption-Decryption
 ```
 
 Create a virtual environment: 
@@ -59,5 +59,3 @@ Yohann Pirbay
 
 ## License
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
-## Additional Info
